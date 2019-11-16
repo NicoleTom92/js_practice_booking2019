@@ -17,8 +17,8 @@ function addVAT(originalPrice, vatRate) {
   if (vatRate === undefined) throw new Error("vatRate is required");
   var Calc = (originalPrice / 100 * vatRate) + originalPrice;
   var Decimals = Calc.toFixed(2);
-  var num = Decimals.toString(); 
-  var nums = num.slice(0, (num.indexOf("."))+3); 
+  var num = Decimals.toString();
+  var nums = num.slice(0, (num.indexOf(".")) + 3);
   var Number1 = Number(nums)
   return Number1
 }
@@ -26,9 +26,9 @@ function addVAT(originalPrice, vatRate) {
 function getSalePrice(originalPrice, reduction) {
   if (originalPrice === undefined) throw new Error("originalPrice is required");
   if (reduction === undefined) throw new Error("reduction is required");
-  let vat = 0;
-  return originalPrice / 2
-     
+  var sale = originalPrice - (originalPrice / 100 * reduction);
+  var answer = Math.round(sale * 100) / 100;
+  return answer
 }
 
 function getMiddleCharacter(str) {
@@ -39,10 +39,12 @@ function getMiddleCharacter(str) {
 
 function reverseWord(word) {
   if (word === undefined) throw new Error("word is required");
-  return word.split("").reverse().join("").split(" ").reverse().join(" ")
+  let reversed = "";
+  for (var i = word.length - 1; i >= 0; i--) {
+    reversed += word[i];
+  }
+  return reversed;
 }
-//To do - add second part of answer 
-
 
 function reverseAllWords(reverseAllWords) {
   if (words === undefined) throw new Error("words is required");
@@ -59,8 +61,6 @@ function countLinuxUsers(users) {
   return CountUsers;
 }
 
-// To do - complete 2nd part of question 
-
 function getMeanScore(scores) {
   if (scores === undefined) throw new Error("scores is required");
   var total = 0;
@@ -70,16 +70,17 @@ function getMeanScore(scores) {
   return total / scores.length;
 }
 
+
 function simpleFizzBuzz(n) {
   if (n === undefined) throw new Error("n is required");
-  var total = "fizz"
-  if(n%3 === 0){  
-      return "fizz";  
-    }
-    else{
-      return false;  
-    }
+  for (var i=1; i < 101; i++){
+    if (n % 15 == 0) return ("fizzbuzz");
+    else if (n % 3 == 0) return ("fizz");
+    else if (n % 5 == 0) return ("buzz");
+    else return(n);
 }
+}
+
 
 module.exports = {
   capitalize,
