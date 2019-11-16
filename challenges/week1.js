@@ -39,15 +39,21 @@ function getMiddleCharacter(str) {
 
 function reverseWord(word) {
   if (word === undefined) throw new Error("word is required");
-  let reversed = "";
-  for (var i = word.length - 1; i >= 0; i--) {
-    reversed += word[i];
-  }
-  return reversed;
+  let splitString = word.split("");
+  let reverseArray = splitString.reverse();
+  let joinArray = reverseArray.join("");
+  return joinArray;
 }
 
-function reverseAllWords(reverseAllWords) {
+function reverseAllWords(words) {
   if (words === undefined) throw new Error("words is required");
+  let convertString = words.toString();
+  let splitString = convertString.split("");
+  let reverseArray = splitString.reverse();
+  let joinArray = reverseArray.join("");
+  let joinArray2 = joinArray.split(",");
+  let reverseArray2 = joinArray2.reverse();
+  return reverseArray2;
 }
 
 function countLinuxUsers(users) {
@@ -63,12 +69,15 @@ function countLinuxUsers(users) {
 
 function getMeanScore(scores) {
   if (scores === undefined) throw new Error("scores is required");
-  var total = 0;
-  for (i = 0; i < scores.length; i += 1) {
-    total += scores[i];
+    let totalSum = 0;
+    for (let i in scores) {
+      totalSum += scores[i];
+    }
+    let scoreCount = scores.length;
+    let average = totalSum / scoreCount;
+    return Number(average.toFixed(2))
   }
-  return total / scores.length;
-}
+
 
 
 function simpleFizzBuzz(n) {
