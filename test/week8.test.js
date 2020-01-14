@@ -139,6 +139,9 @@ describe("findNeedle", () => {
   });
 });
 
+
+
+
 describe("getWordFrequencies", () => {
   test("returns the frequencies of each word in a string", () => {
     expect(getWordFrequencies("hello world")).toEqual({
