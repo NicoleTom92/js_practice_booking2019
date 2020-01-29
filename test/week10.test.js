@@ -1,75 +1,107 @@
 const {
-    sumDigits,
-    createRange,
-    hexToRGB, 
+    SumOfDigits,
+    returnRange,
+    getScreentimeAlertList,
+    hexToRGB,
     findWinner
 } = require("../challenges/week10");
 
-describe("sumDigits", () => {
-    test("it throws an error if not passed a number as n", () => {
+//First Test//
+describe("SumOfDigits", () => {
+    test("an error will be thrown if a number is not passed as n", () => {
         expect(() => {
-            sumDigits();
-        }).toThrow("n is required");
+            SumOfDigits();
+        }).toThrow("n required");
 
         expect(() => {
-            sumDigits(["3", "7", "11", "17"]);
-        }).toThrow("a number is required");
+            SumOfDigits(["1", "9", "15", "32"]);
+        }).toThrow("number required");
 
         expect(() => {
-            sumDigits("87");
-        }).toThrow("a number is required");
+            SumOfDigits("57");
+        }).toThrow("number required");
     });
-    
+
     test("it returns the sum of all individual digits in the number", () => {
-        const result = sumDigits(163);
+        const result = SumOfDigits(163);
         const expected = 10;
         expect(result).toBe(expected);
     });
 
     test("it returns n if only one digit is provided", () => {
-        const result = sumDigits(1);
+        const result = SumOfDigits(1);
         const expected = 1;
         expect(result).toBe(expected);
     });
 });
 
-describe("createRange", () => {
-    test("it throws an error if not passed numbers for each of the start, end and step arguments", () => {
-        expect(() => {
-            createRange(undefined, 5, 6);
-        }).toThrow("start is required");
+//Second Test//
+describe("returnRange", () => {
+    test("create a range of numbers as an array using a start, an end and a step", () => {
+        expect(returnRange(3, 11, 2)).toEqual([3, 5, 7, 9, 11]);
+    })
+    test("both the start and end numbers are inclusive", () => {
+        expect(returnRange(7, 18, 2)).toEqual([7, 9, 11, 13, 15, 17, 18]);
+    })
 
-        expect(() => {
-            createRange(5, undefined, 6);
-        }).toThrow("end is required");
-
-        expect(() => {
-            createRange([16], [54], [7]);
-        }).toThrow("to create a range you must input numbers");
-
-        expect(() => {
-            createRange("19", "50", "9");
-        }).toThrow("to create a range you must input numbers");
-    });
-    
-    test("it returns the range of numbers as an array. The range goes from the start number to the end number, with intervals determined by the step", () => {
-        const result = createRange(5, 60, 6);
-        const expected = [ 5, 11, 17, 23, 29, 35, 41, 47, 53, 59 ];
-        expect(result).toEqual(expected);
-    });  
+    test("Step is optional. Assume the step is 1 if not provided.", () => {
+        expect(returnRange(7, 10)).toEqual([7, 8, 9, 10]);
+    })
+    test("Step is a negative number, assume the step is 1.", () => {
+        expect(returnRange(7, 10, -8)).toEqual([7, 8, 9, 10]);
+    })
+    test("If start number is greater than end number, the values ​​will be swapped.Start takes the number of End and vice versa.", () => {
+        expect(returnRange(30, 10, 5)).toEqual([10, 15, 20, 25, 30]);
+    })
 });
 
-describe("hexToRGB", () => {
-    test("it throws an error if not passed an input with the correct number of characters", () => {
-        expect(() => {
-            hexToRGB();
-        }).toThrow("hexStr is required");
+//Third Test//
+describe("getScreentimeAlertList", () => {
+    test("return users who have exceeded 100 minutes of screentime on given date", () => {
+        const users = [
+            {
+                username: "beth_1234",
+                name: "Beth Smith",
+                screenTime: [
+                    { date: "2019-05-01", usage: { twitter: 34, instagram: 22, facebook: 40 } },
+                    { date: "2019-05-02", usage: { twitter: 56, instagram: 40, facebook: 31 } },
+                    { date: "2019-05-03", usage: { twitter: 12, instagram: 15, facebook: 19 } },
+                    { date: "2019-05-04", usage: { twitter: 10, instagram: 56, facebook: 61 } },
+                ]
+            },
+            {
+                username: "sam_j_1989",
+                name: "Sam Jones",
+                screenTime: [
+                    { date: "2019-06-04", usage: { mapMyRun: 40, whatsApp: 61, facebook: 0, safari: 10 } },
+                    { date: "2019-06-13", usage: { mapMyRun: 0, whatsApp: 0, facebook: 0, safari: 16 } },
+                    { date: "2019-06-14", usage: { mapMyRun: 0, whatsApp: 0, facebook: 0, safari: 31 } },
+                ]
+            },
+            {
+                username: "sam_t_2000",
+                name: "Sam Jones",
+                screenTime: [
+                    { date: "2019-05-04", usage: { mapMyRun: 40, whatsApp: 61, facebook: 0, safari: 10 } },
+                    { date: "2019-06-13", usage: { mapMyRun: 0, whatsApp: 0, facebook: 0, safari: 16 } },
+                    { date: "2019-06-14", usage: { mapMyRun: 0, whatsApp: 0, facebook: 0, safari: 31 } },
+                ]
+            },
+        ]
+        expect(getScreentimeAlertList(users, "2019-05-04")).toEqual(["beth_1234", "sam_t_2000"]);
+    })
+});
 
+//Fourth Test//
+describe("hexToRGB", () => {
+    test("an error appears if the incorrect number of characters are shown", () => {
         expect(() => {
             hexToRGB("#FF11339");
-        }).toThrow("Your input contains too many characters!");
+        }).toThrow("there are too many characters");
     });
-    
+        expect(() => {
+            hexToRGB();
+        }).toThrow("hex String required");
     test("it returns the rgb equivalent of the hexadecimal input", () => {
         const result = hexToRGB("#FF1133");
         const expected = "rgb(255,17,51)";
@@ -77,14 +109,15 @@ describe("hexToRGB", () => {
     });
 });
 
-describe.only("findWinner", () => {
-    test("it throws an error if not passed an input for board", () => {
+//Fifth Test//
+describe("find winner of game", () => {
+    test("there is an error if there is no input on the board", () => {
         expect(() => {
             findWinner();
-        }).toThrow("board is required");
+        }).toThrow("board required");
     });
 
-    test("it returns X if player X has won, 0 if the player 0 has won, and null if there is currently no winner", () => {
+    test("returns null if there is no winner, 0 if player 0 wins, returns x if player x wins the game", () => {
         const board = [
             ["X", "0", null],
             ["X", "X", "X"],
